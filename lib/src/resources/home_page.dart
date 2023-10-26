@@ -32,12 +32,12 @@ import 'package:my_flutter_app/src/resources/sign_in.dart';
 // }
 
 class HomePage extends StatelessWidget {
-  
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home Page"),
+      appBar: AppBar(title: const Text("Home Page"),
       ),
       body: Center(
       child: Column(
@@ -50,9 +50,9 @@ class HomePage extends StatelessWidget {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    child: Text('SIGN OUT'),
+                    child: const Text('SIGN OUT'),
                     style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                     backgroundColor: Colors.blue,
                      textStyle: const TextStyle(
                     color: Colors.white,
@@ -61,7 +61,9 @@ class HomePage extends StatelessWidget {
                      ),
                       onPressed:(){ 
                         signOutGoogle();
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                          builder: (context) {return const LoginPage();}),
+                        ModalRoute.withName('/'));
 
 
                       }

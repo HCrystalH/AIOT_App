@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/src/resources/login_page.dart';
-class MyApp extends StatelessWidget {
 
+@immutable
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );

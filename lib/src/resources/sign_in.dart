@@ -1,8 +1,11 @@
+// import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
- final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
 late String name;
@@ -46,8 +49,8 @@ Future<String?> signInWithGoogle() async {
     final User? currentUser = _auth.currentUser;
     assert(user.uid == currentUser?.uid);
 
-    print('signInWithGoogle succeeded: $user');
-
+    // print('signInWithGoogle succeeded: $user');
+    debugPrint('signInWithGoogle succeeded: $user');
     return '$user';
   }
 
@@ -57,5 +60,5 @@ Future<String?> signInWithGoogle() async {
 Future<void> signOutGoogle() async {
   await googleSignIn.signOut();
 
-  print("User Signed Out");
+  debugPrint("User Signed Out");
 }

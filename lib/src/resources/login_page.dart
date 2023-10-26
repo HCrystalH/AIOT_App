@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+// import 'package:my_flutter_app/register/register.dart';r
 import 'package:my_flutter_app/src/resources/home_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:my_flutter_app/src/resources/sign_in.dart';
+import 'package:my_flutter_app/register/register.dart';
 
 // GoogleSignIn _googleSignIn = GoogleSignIn(
 //   scopes: <String>[
@@ -11,8 +13,10 @@ import 'package:my_flutter_app/src/resources/sign_in.dart';
 //     'https://www.googleapis.com/auth/contacts.readonly'
 //   ]
 // );
+@immutable
 class LoginPage extends StatefulWidget {
-
+  const LoginPage({super.key});
+  
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -20,13 +24,18 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   bool _showPass = false;
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passController = new TextEditingController();
-  var _emailErr = "Invalid email";
-  var _passErr = "Password must be over 6 characters";
+  // TextEditingController _emailController = new TextEditingController();
+  // TextEditingController _passController = new TextEditingController();
+  // var _emailErr = "Invalid email";
+  // var _passErr = "Password must be over 6 characters";
+  // var _emailInvalid = false;
+  // var _passInvalid = false;
+  final _emailController =  TextEditingController();
+  final _passController =  TextEditingController();
+  final _emailErr = "Invalid email";
+  final _passErr = "Password must be over 8 characters";
   var _emailInvalid = false;
   var _passInvalid = false;
-
   //  GoogleSignInAccount? _currentUser;
  
 //   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -88,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
 // }
 
    @override
-
   Widget build(BuildContext context) {
     // GoogleSignInAccount? user = _currentUser;
     // if(user!=null){
@@ -106,8 +114,8 @@ class _LoginPageState extends State<LoginPage> {
     // else{
     return  Scaffold(
         body: Container(
-          padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-          constraints: BoxConstraints.expand(),
+          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+          constraints: const BoxConstraints.expand(),
           color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -118,15 +126,15 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: 70,
                   height: 70,
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xffd8d8d8),
                   ),
-                  child: FlutterLogo()),
+                  child: const FlutterLogo()),
               ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 60),
+              const Padding(
+                  padding:  EdgeInsets.fromLTRB(0, 0, 0, 60),
                   child: Text("Hello\nWelcome Back", style: TextStyle(
                     fontWeight: FontWeight.bold, 
                     color: Colors.black, 
@@ -139,12 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                   child: TextField(
                     controller: _emailController,
-                    style: TextStyle(fontSize: 18, color: Colors.black),
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
                     decoration: InputDecoration(
                     labelText: 'Enter your email',
                     errorText: _emailInvalid ? _emailErr : null,
                     labelStyle: 
-                    TextStyle(color: Color(0xff888888), fontSize: 15)
+                    const TextStyle(color: Color(0xff888888), fontSize: 15)
                     ),
                   ),
               ),
@@ -155,18 +163,19 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                        TextField(
                         controller: _passController,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: const TextStyle(fontSize: 18, color: Colors.black),
                         obscureText: !_showPass,
                         decoration: InputDecoration(
                         labelText: 'Enter your password',
                         errorText: _passInvalid ? _passErr : null,
                         labelStyle: 
-                        TextStyle(color: Color(0xff888888), fontSize: 15)
+                        const TextStyle(color: Color(0xff888888), fontSize: 15)
                         ),
                       ),
                   GestureDetector(
                     onTap: onToggleShowPass,
-                    child: Text(_showPass ? "HIDE" : "SHOW", style: TextStyle(color: Colors.blue, fontSize: 13, fontWeight: FontWeight.bold),
+                    child: Text(_showPass ? "HIDE" : "SHOW", 
+                    style: const TextStyle(color: Colors.blue, fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   )
                   ],
@@ -178,9 +187,9 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    child: Text('SIGN IN'),
+                    child: const Text('SIGN IN'),
                     style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                     backgroundColor: Colors.blue,
                      textStyle: const TextStyle(
                     color: Colors.white,
@@ -207,12 +216,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: Image.asset('assets/google.png', height: 20, width: 20,),
                      ),
 
-                    Text('GOOGLE SIGN IN'),
+                    const Text('GOOGLE SIGN IN'),
                     ],
                     ),
                     
                     style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                     backgroundColor: Colors.blue,
                      textStyle: const TextStyle(
                     color: Colors.white,
@@ -225,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return HomePage();
+                  return const HomePage();
                 },
               ),
             );
@@ -235,31 +244,41 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-
-
-
-              Container(
+              // Container(
+                SizedBox(
                   height: 50,
                   width: double.infinity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "NEW USER? SIGN UP",
-                         style: TextStyle(
-                        fontSize: 15, color: Color(0xff888888),
-                      ),
-                      ),
-                      Text(
-                        "FORGOT PASSWORD?",
-                        style: TextStyle(
-                          fontSize: 15, color: Colors.blue,
-                        ),
-
-                      ),
+                    children: [
+                      ElevatedButton(
+                        onPressed: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder:(context) => const RegisterForm())
+                            );
+                        }, 
+                        child: const Text('Sign up'),)
                     ],
+                    // children: <Widget>[
+                      
+                    //   Text(
+                    //     "NEW USER? SIGN UP",
+                    //     style: TextStyle(
+                    //     fontSize: 15, color: Color(0xff888888),
+                    //   ),
+                    //   ),
+                    //   Text(
+                    //     "FORGOT PASSWORD?",
+                    //     style: TextStyle(
+                    //       fontSize: 15, color: Colors.blue,
+                    //     ),
+
+                    //   ),
+                    // ],
                   ),
                 ),
+                
             ],
           ),
         ),
@@ -268,6 +287,7 @@ class _LoginPageState extends State<LoginPage> {
     
   }
 
+  
 void onToggleShowPass () {
 setState(() {
   _showPass = !_showPass;
@@ -293,7 +313,7 @@ void onSignInClicked(){
     if(!_emailInvalid && !_passInvalid){
    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => HomePage(),
+        builder: (context) => const HomePage(),
       ),
     );
   }
