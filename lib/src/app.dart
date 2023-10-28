@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/src/resources/login_page.dart';
+import 'package:my_flutter_app/authentication/login_page.dart';
 
 @immutable
 class MyApp extends StatelessWidget {

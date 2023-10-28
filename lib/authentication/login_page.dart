@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:my_flutter_app/register/register.dart';r
 import 'package:my_flutter_app/src/resources/home_page.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
-import 'package:my_flutter_app/src/resources/sign_in.dart';
-import 'package:my_flutter_app/register/register.dart';
+import 'package:my_flutter_app/authentication/sign_in.dart';
+import 'package:my_flutter_app/authentication/register.dart';
+import 'auth.dart';
 
-// GoogleSignIn _googleSignIn = GoogleSignIn(
-//   scopes: <String>[
-//     'email'
-//     'https://www.googleapis.com/auth/contacts.readonly'
-//   ]
-// );
 @immutable
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,99 +15,35 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   bool _showPass = false;
-  // TextEditingController _emailController = new TextEditingController();
-  // TextEditingController _passController = new TextEditingController();
-  // var _emailErr = "Invalid email";
-  // var _passErr = "Password must be over 6 characters";
-  // var _emailInvalid = false;
-  // var _passInvalid = false;
+
   final _emailController =  TextEditingController();
   final _passController =  TextEditingController();
   final _emailErr = "Invalid email";
   final _passErr = "Password must be over 8 characters";
   var _emailInvalid = false;
   var _passInvalid = false;
-  //  GoogleSignInAccount? _currentUser;
  
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
-// final GoogleSignIn googleSignIn = GoogleSignIn();
+  final _formKey = GlobalKey<FormState>();
 
-// late String name;
-// late String email;
-// late String imageUrl;
+    final AuthService _auth = AuthService();
 
-// Future<String?> signInWithGoogle() async {
-//   // await Firebase.initializeApp();
+    // text field: username , password
+    String email = '';
+    String password = '';
 
-//   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-//   final GoogleSignInAuthentication? googleSignInAuthentication =
-//       await googleSignInAccount?.authentication;
+    //error messages
+    String error ='';
 
-//   final AuthCredential credential = GoogleAuthProvider.credential(
-//     accessToken: googleSignInAuthentication?.accessToken,
-//     idToken: googleSignInAuthentication?.idToken,
-//   );
-
-//   final UserCredential authResult =
-//       await _auth.signInWithCredential(credential);
-//   final User? user = authResult.user;
-
-//   if (user != null) {
-//     // Checking if email and name is null
-//     assert(user.email != null);
-//     assert(user.displayName != null);
-//     assert(user.photoURL != null);
-
-//     name = user.displayName!;
-//     email = user.email!;
-//     imageUrl = user.photoURL!;
-
-//     // Only taking the first part of the name, i.e., First Name
-//     if (name.contains(" ")) {
-//       name = name.substring(0, name.indexOf(" "));
-//     }
-
-//     assert(!user.isAnonymous);
-//     assert(await user.getIdToken() != null);
-
-//     final User? currentUser = _auth.currentUser;
-//     assert(user.uid == currentUser?.uid);
-
-//     print('signInWithGoogle succeeded: $user');
-
-//     return '$user';
-//   }
-
-//   return null;
-// }
-
-// Future<void> signOutGoogle() async {
-//   await googleSignIn.signOut();
-
-//   print("User Signed Out");
-// }
-
-   @override
+  @override
   Widget build(BuildContext context) {
-    // GoogleSignInAccount? user = _currentUser;
-    // if(user!=null){
-    //   return Column(
-    //     children: [
-    //       SizedBox(height: 90,),
-    //       GoogleUserCircleAvatar(identity: user),
-    //       SizedBox(height: 40,),
-    //       ElevatedButton(onPressed: handleSignOut, child: Text('Sign Out')),
 
-
-    //     ],
-    //   );
-    // }
-    // else{
+   
     return  Scaffold(
-        body: Container(
-          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-          constraints: const BoxConstraints.expand(),
-          color: Colors.white,
+      body: Container(
+        padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+        constraints: const BoxConstraints.expand(),
+        color: Colors.white,
+        child: Form(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,34 +70,44 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 
               ),
+              
+              // Email or username field
               Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                  child: TextField(
+                  child: TextFormField(
                     controller: _emailController,
                     style: const TextStyle(fontSize: 18, color: Colors.black),
                     decoration: InputDecoration(
-                    labelText: 'Enter your email',
-                    errorText: _emailInvalid ? _emailErr : null,
-                    labelStyle: 
-                    const TextStyle(color: Color(0xff888888), fontSize: 15)
+                      labelText: 'Enter your email',
+                      errorText: _emailInvalid ? _emailErr : null,
+                      labelStyle: 
+                        const TextStyle(color: Color(0xff888888), fontSize: 15)
                     ),
+                    onChanged:(value){
+                      setState(() => email = value);
+                    },
                   ),
               ),
+              
+              // Password field
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: Stack(
                   alignment: AlignmentDirectional.centerEnd,
                   children: <Widget>[
-                       TextField(
+                      TextFormField(
                         controller: _passController,
                         style: const TextStyle(fontSize: 18, color: Colors.black),
                         obscureText: !_showPass,
                         decoration: InputDecoration(
-                        labelText: 'Enter your password',
-                        errorText: _passInvalid ? _passErr : null,
-                        labelStyle: 
-                        const TextStyle(color: Color(0xff888888), fontSize: 15)
+                          labelText: 'Enter your password',
+                          errorText: _passInvalid ? _passErr : null,
+                          labelStyle: 
+                            const TextStyle(color: Color(0xff888888), fontSize: 15)
                         ),
+                        onChanged: (value){
+                          setState(() => password = value );
+                        },
                       ),
                   GestureDetector(
                     onTap: onToggleShowPass,
@@ -181,6 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
+              
+              //Sign in button
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: SizedBox(
@@ -191,16 +130,36 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                     backgroundColor: Colors.blue,
-                     textStyle: const TextStyle(
-                    color: Colors.white,
-                     fontSize: 15, 
-                     fontStyle: FontStyle.normal),
-                     ),
-                      onPressed: onSignInClicked,
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15, 
+                      fontStyle: FontStyle.normal),
+                    ),
+                    // onPressed: onSignInClicked,
+                    onPressed: () async{
+                      //_formKey.currentState! : to make sure that it's not null
+                      if(_formKey.currentState!.validate()){
+                        dynamic result = await _auth.registerWithEmailAndPassword(email,password);
+                
+                        if(result == null){
+                          setState(() {
+                            error = 'Cannot sign with those credentials';
+                          });
+                        }
+                      }
+                    },
                   ),
                 ),
               ),
-               Padding(
+              
+              //This box to show error message
+              const SizedBox(height: 10.0),
+              Text(
+                error,
+                style: const TextStyle(color: Colors.red, fontSize: 12.0),
+              ),
+
+              Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: SizedBox(
                   width: double.infinity,
@@ -212,8 +171,8 @@ class _LoginPageState extends State<LoginPage> {
 
                     children: [
                        Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: Image.asset('assets/google.png', height: 20, width: 20,),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: Image.asset('assets/google.png', height: 20, width: 20,),
                      ),
 
                     const Text('GOOGLE SIGN IN'),
@@ -228,35 +187,35 @@ class _LoginPageState extends State<LoginPage> {
                      fontSize: 15, 
                      fontStyle: FontStyle.normal),
                      ),
-   onPressed: () {
-        signInWithGoogle().then((result) {
-          if (result != null) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return const HomePage();
-                },
-              ),
-            );
-          }
-        });
-      },                  ),
+                onPressed: () {
+                      signInWithGoogle().then((result) {
+                        if (result != null) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const HomePage();
+                              },
+                            ),
+                          );
+                        }
+                      });
+                    },                  ),
                 ),
               ),
 
               // Container(
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder:(context) => const RegisterForm())
-                            );
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder:(context) => const RegisterForm())
+                          );
                         }, 
                         child: const Text('Sign up'),)
                     ],
@@ -282,8 +241,8 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-
-      );
+      ),
+    );
     
   }
 

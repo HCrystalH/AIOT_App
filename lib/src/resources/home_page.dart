@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/src/resources/login_page.dart';
-import 'package:my_flutter_app/src/resources/sign_in.dart';
+import 'package:my_flutter_app/authentication/login_page.dart';
+import 'package:my_flutter_app/authentication/sign_in.dart';
 
 // class MyWidget extends StatefulWidget {
 //   const MyWidget({super.key});
