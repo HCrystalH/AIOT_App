@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passErr = "Password must be over 8 characters";
   var _emailInvalid = false;
   var _passInvalid = false;
- 
+  var _show = false;
   final _formKey = GlobalKey<FormState>();
 
     final AuthService _auth = AuthService();
@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
               
               //Sign in button
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -146,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                 
                         if(result == null){
                           setState(() {
+                            _show = true;
                             error = 'Cannot sign with those credentials';
                           });
                         }
@@ -156,11 +157,20 @@ class _LoginPageState extends State<LoginPage> {
               ),
               
               //This box to show error message
-              const SizedBox(height: 10.0),
-              Text(
-                error,
+            
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, _show ? 20 : 10),
+              child: SizedBox(
+                height: _show ? 12 : 0,
+                child: Text(error,
                 style: const TextStyle(color: Colors.red, fontSize: 12.0),
+
+                ),
+                
+                
               ),
+              ),
+              
 
               //Sign in with google account
               Padding(
