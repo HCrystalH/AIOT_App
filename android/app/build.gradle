@@ -46,7 +46,11 @@ android {
         applicationId "com.example.my_flutter_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+
+        /* fix error plugin flutter_facebook_auth requires a higher Android SDK version*/
+        // minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
+        /*  END HERE    */
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

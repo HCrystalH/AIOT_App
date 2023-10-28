@@ -207,7 +207,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_facebook_auth:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_facebook_auth
       sha256: "2ed18ea374919fbca4c85383957662674d23f6f3901dfbf603f8d54cab10d050"

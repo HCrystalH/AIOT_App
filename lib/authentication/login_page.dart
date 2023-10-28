@@ -44,6 +44,8 @@ class _LoginPageState extends State<LoginPage> {
         constraints: const BoxConstraints.expand(),
         color: Colors.white,
         child: Form(
+          key:_formKey,
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: const FlutterLogo()),
               ),
+              
               const Padding(
                   padding:  EdgeInsets.fromLTRB(0, 0, 0, 60),
                   child: Text("Hello\nWelcome Back", style: TextStyle(
@@ -159,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: const TextStyle(color: Colors.red, fontSize: 12.0),
               ),
 
+              //Sign in with google account
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: SizedBox(
