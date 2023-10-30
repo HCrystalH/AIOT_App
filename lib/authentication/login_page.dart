@@ -150,10 +150,12 @@ class _LoginPageState extends State<LoginPage> {
                             error = 'Cannot sign with those credentials';
                           });
                         }else{
-                          setState(() {
-                            error = 'Unknown error';
-                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage())
+                          );
                         }
+                  
                       }
                     },
                   ),
