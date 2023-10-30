@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "505114390571",
-    "project_id": "my-flutter-app-69a13",
-    "storage_bucket": "my-flutter-app-69a13.appspot.com"
+    "project_number": "381424857643",
+    "project_id": "aiot-app",
+    "storage_bucket": "aiot-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:505114390571:android:90584cf69a649d8d2fba6e",
+        "mobilesdk_app_id": "1:381424857643:android:ec33668c9b76a963c8706e",
         "android_client_info": {
           "package_name": "com.example.my_flutter_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAEVWTH3CX-v6onWCYekTZZ0E-IGjXawLs"
+          "current_key": "AIzaSyCD0mL66gqyg8x3jibTGPXFxI5KyDE7DE8"
         }
       ],
       "services": {

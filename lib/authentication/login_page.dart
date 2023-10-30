@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/src/resources/home_page.dart';
+import 'package:my_flutter_app/home/home_page.dart';
 import 'package:my_flutter_app/authentication/sign_in.dart';
 import 'package:my_flutter_app/authentication/register.dart';
 import 'auth.dart';
@@ -142,11 +142,15 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async{
                       //_formKey.currentState! : to make sure that it's not null
                       if(_formKey.currentState!.validate()){
-                        dynamic result = await _auth.registerWithEmailAndPassword(email,password);
+                        dynamic result = await _auth.signInWithEmailAndPassword(email,password);
                 
                         if(result == null){
                           setState(() {
                             error = 'Cannot sign with those credentials';
+                          });
+                        }else{
+                          setState(() {
+                            error = 'Unknown error';
                           });
                         }
                       }

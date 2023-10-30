@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/models/user.dart';
+import 'package:my_flutter_app/services/database.dart';
 class AuthService{
   
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,20 +31,36 @@ class AuthService{
   }
 
   // Sign in with email and password
-
-  // Register with email and password
-  Future registerWithEmailAndPassword(String useremail, String userpassword) async{
+  Future signInWithEmailAndPassword(String email,String password) async{
     try{
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: useremail, password: userpassword);
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
-      
-      if(user != null) return _userFromFirebaseUser(user);
-      
-    }catch(e){
 
+      if(user!=null)  return _userFromFirebaseUser(user);
+    }catch(e){
       debugPrint(e.toString());
       return null;
     }
+  }
+
+  // Register with email and password
+  Future<MyUser?> registerWithEmailAndPassword(String _email, String _password) async{
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
+      User? user = result.user;
+      
+      if(user != null) {
+        //create a new document for the user with the uid
+        await DatabaseService(uid:user.uid).updateUserData('username', 'password');
+
+        return _userFromFirebaseUser(user);
+      }
+    }catch(e){
+
+      debugPrint(e.toString());
+      
+    }
+    return null;
   }
 
   // Sign out

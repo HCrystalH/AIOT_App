@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,7 +31,9 @@ class RegisterFormState extends State<RegisterForm>{
   //Text field state
   String email = '';
   String password = '';
+  String confirmPassword ='';
   String error = '';
+  String message= '';
   // Declare TextEditingController as an instance variable
   // final _passwordController = TextEditingController();
   // final _confirmPasswordController = TextEditingController();
@@ -74,11 +78,12 @@ class RegisterFormState extends State<RegisterForm>{
               const SizedBox(height:20.0),
               TextFormField(
                 decoration:  const InputDecoration(labelText: 'Password'),
-                obscureText: true,
+                // obscureText: true,
                 // controller: _passwordController,
                 validator: (value) => value!.length <8 ? 'Password must at least 8 characters ': null,
                 onChanged: (value){
                   setState(() => password = value);
+                  setState(() => confirmPassword = value);
                 },
               ),
               
@@ -86,15 +91,15 @@ class RegisterFormState extends State<RegisterForm>{
               const SizedBox(height:20.0),
               TextFormField(
                 decoration:  const InputDecoration(labelText: 'Confirm Password'),
-                obscureText: true,
+                // obscureText: true,
                 // controller: _confirmPasswordController,
                 validator: (value){
                   if(value == null){
                     return 'Password does not match';
-                  }else if(value != password){
+                  }else if(value != confirmPassword){
                     return 'Password does not match';
-                  }
-                  return null;
+                  }else {return null;}
+                  
                 },
                 onChanged: (value){
                   setState(() => password = value);
@@ -111,13 +116,28 @@ class RegisterFormState extends State<RegisterForm>{
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed:() async {
-                  //_formKey.currentState! : to make sure that it's not null
+                  //_formKey.currentState? : to make sure that it's not null
                   if(_formKey.currentState!.validate()){
+                    _formKey.currentState?.save();
+
                     dynamic result = await _auth.registerWithEmailAndPassword(email,password);
-                    if(result == null){
-                      setState( () => error ='Please supply a valid email');
+                    // UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+                    // User? user = result.user;
+                    // await FirebaseFirestore.instance.collection('User').doc(user?.uid).set({
+                    //   'username': email,
+                    //   'password': password,
+                    // });
+                    if(result ==null){
+                      setState( () => error ='Please enter information correctly!');
+                    }else if(result != null){
+                      setState( () => message ='Sucessful Registration!');
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context)=> const LoginPage())
+                      );
                     }
                   }
+                  else {setState( () => error ='Please enter full fields and correct information!');}
                 }
               ),
               
