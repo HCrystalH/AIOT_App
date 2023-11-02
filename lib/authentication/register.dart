@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
+import 'package:flutter/material.dart';
 
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 enum RegistrationResult { success, failure }
-
 
 // Define a custom Form widget
 class RegisterForm extends StatefulWidget {
@@ -34,11 +33,10 @@ class RegisterFormState extends State<RegisterForm>{
   String confirmPassword ='';
   String error = '';
   String message= '';
+  
   // Declare TextEditingController as an instance variable
   // final _passwordController = TextEditingController();
   // final _confirmPasswordController = TextEditingController();
-
-  
 
   @override
   Widget build(BuildContext context) {

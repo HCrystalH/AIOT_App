@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/authentication/auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
-import 'package:my_flutter_app/authentication/sign_in.dart';
+// import 'package:my_flutter_app/authentication/sign_in.dart';
 
 // class MyWidget extends StatefulWidget {
 //   const MyWidget({super.key});
@@ -60,7 +61,7 @@ class HomePage extends StatelessWidget {
                      fontStyle: FontStyle.normal),
                      ),
                       onPressed:(){ 
-                        signOutGoogle();
+                        AuthService().signOutGoogle();
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
                           builder: (context) {return const LoginPage();}),
                         ModalRoute.withName('/'));

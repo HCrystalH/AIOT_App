@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/home/home_page.dart';
-import 'package:my_flutter_app/authentication/sign_in.dart';
 import 'package:my_flutter_app/authentication/register.dart';
+import 'forget_password.dart';
 import 'auth.dart';
 
 @immutable
@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
-   
     return  Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
@@ -94,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
               
               // Password field
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                 child: Stack(
                   alignment: AlignmentDirectional.centerEnd,
                   children: <Widget>[
@@ -122,6 +121,24 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               
+              //Forget Password field
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children:[
+                    ElevatedButton(
+                      onPressed:() async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute (builder: (context) => const ForgotPasswordPage()),
+                          );
+                      },
+                      child: const Text('Forgot Password?'),
+                    ),          
+                  ],
+                ),
+              ),
               //Sign in button
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -152,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                         }else{
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage())
+                            MaterialPageRoute(builder: (context) => const HomePage())
                           );
                         }
                   
@@ -163,18 +180,15 @@ class _LoginPageState extends State<LoginPage> {
               ),
               
               //This box to show error message
-            
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, _show ? 20 : 10),
-              child: SizedBox(
-                height: _show ? 12 : 0,
-                child: Text(error,
-                style: const TextStyle(color: Colors.red, fontSize: 12.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, _show ? 20 : 10),
+                child: SizedBox(
+                  height: _show ? 12 : 0,
+                  child: Text(error,
+                  style: const TextStyle(color: Colors.red, fontSize: 12.0),
 
+                  ),
                 ),
-                
-                
-              ),
               ),
               
 
@@ -208,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                      fontStyle: FontStyle.normal),
                      ),
                 onPressed: () {
-                      signInWithGoogle().then((result) {
+                      AuthService().signInWithGoogle().then((result) {
                         if (result != null) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
