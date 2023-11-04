@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                         }else{
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const HomePage())
+                            MaterialPageRoute(builder: (context) =>  HomePage())
                           );
                         }
                   
@@ -227,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return const HomePage();
+                                return  HomePage();
                               },
                             ),
                           );
@@ -306,7 +306,7 @@ void onSignInClicked(){
     if(!_emailInvalid && !_passInvalid){
    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) =>  HomePage(),
       ),
     );
   }
