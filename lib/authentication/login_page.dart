@@ -38,7 +38,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     return  Scaffold(
+      backgroundColor: Colors.white, // Set the background color of the page
+
       body: Container(
+        
         padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
         constraints: const BoxConstraints.expand(),
         color: Colors.white,
@@ -93,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
               
               // Password field
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Stack(
                   alignment: AlignmentDirectional.centerEnd,
                   children: <Widget>[
@@ -123,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
               
               //Forget Password field
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children:[
@@ -134,7 +137,19 @@ class _LoginPageState extends State<LoginPage> {
                             MaterialPageRoute (builder: (context) => const ForgotPasswordPage()),
                           );
                       },
-                      child: const Text('Forgot Password?'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        elevation: 0, // 👈 Add this
+                        // primary: Colors.white, Try avoiding this as it is deprecated
+                        side: const BorderSide(width: 0, color: Colors.white),
+                      ),
+                      child: const Text(
+                        'Forgot Password?',
+                         style: TextStyle(color: Colors.blue,
+                         ),
+
+                      
+                      ),
                     ),          
                   ],
                 ),
@@ -181,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
               
               //This box to show error message
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, _show ? 20 : 10),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: SizedBox(
                   height: _show ? 12 : 0,
                   child: Text(error,
@@ -215,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                     
                     style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: const Color.fromARGB(255, 174, 171, 171),
                      textStyle: const TextStyle(
                     color: Colors.white,
                      fontSize: 15, 
@@ -238,12 +253,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               // Container(
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+              Padding(
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 50),
+              child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              
+              children: [
+                    const Text(
+                    'Don\'t have account?',
+                        style: TextStyle(
+                        fontSize: 15,
+                        ),
+                    ),
                     ElevatedButton(
                       onPressed: (){
                         Navigator.push(
@@ -251,7 +272,22 @@ class _LoginPageState extends State<LoginPage> {
                           MaterialPageRoute(builder:(context) => const RegisterForm())
                           );
                         }, 
-                        child: const Text('Sign up'),)
+                        style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        elevation: 0, // 👈 Add this
+                        // primary: Colors.white, Try avoiding this as it is deprecated
+                        side: const BorderSide(width: 0, color: Colors.white),
+                      ),
+                        child: const Text(
+                          'Sign up',
+                         style: TextStyle(color: Colors.blue,
+                        fontSize: 15,
+                       
+                      ),
+                      textAlign: TextAlign.left,
+
+                        ),)
+                        
                     ],
                     // children: <Widget>[
                       
