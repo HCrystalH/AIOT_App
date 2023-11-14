@@ -31,6 +31,9 @@ class _LoginPageState extends State<LoginPage> {
     String email = '';
     String password = '';
 
+    // check email and password are full filled or not
+    bool checkEmail = false;
+    bool checkPassword = false;
     //error messages
     String error ='';
 
@@ -86,7 +89,11 @@ class _LoginPageState extends State<LoginPage> {
                         const TextStyle(color: Color(0xff888888), fontSize: 15)
                     ),
                     onChanged:(value){
-                      setState(() => email = value);
+                      setState((){
+                          email = value;
+                          checkEmail = true;
+                        } 
+                      );
                     },
                   ),
               ),
@@ -108,7 +115,12 @@ class _LoginPageState extends State<LoginPage> {
                             const TextStyle(color: Color(0xff888888), fontSize: 15)
                         ),
                         onChanged: (value){
-                          setState(() => password = value );
+                          setState((){
+                              password = value;
+                              checkPassword = true;
+                            } 
+                          );
+                          
                         },
                       ),
                   GestureDetector(
