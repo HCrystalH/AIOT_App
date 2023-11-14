@@ -49,6 +49,10 @@ class RegisterFormState extends State<RegisterForm>{
         title: const Text('Sign in to Counting app'),
       ),
       body: Container(
+      
+        
+        child: Padding(
+
         padding: const EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),
         // Testing
         child: Form(
@@ -57,6 +61,8 @@ class RegisterFormState extends State<RegisterForm>{
             children: <Widget>[
               // This box for username 
               const SizedBox(height: 20.0),
+              Image.asset('assets/user.png', height: 60, width: 60,),
+
               TextFormField(
                 decoration:  const InputDecoration(labelText: 'Email'),
                 validator: (value) {
@@ -162,6 +168,7 @@ class RegisterFormState extends State<RegisterForm>{
             ],
           ),
         ),
+      )
       )
     );
   }

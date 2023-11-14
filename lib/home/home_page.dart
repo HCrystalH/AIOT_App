@@ -1,6 +1,13 @@
+//import 'dart:html';
+
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:my_flutter_app/authentication/auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
+import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+import 'package:image_picker/image_picker.dart';
+
 // import 'package:my_flutter_app/authentication/sign_in.dart';
 
 // class MyWidget extends StatefulWidget {
@@ -10,34 +17,21 @@ import 'package:my_flutter_app/authentication/login_page.dart';
 //   State<MyWidget> createState() => _MyWidgetState();
 // }
 
-// class _MyWidgetState extends State<MyWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
-// class HomePage extends StatefulWidget {
 
-//   @override
-//   State<HomePage> createState() => _MyHomeState();
-// }
-
-// class _MyHomeState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("Home Page"),
-//       ),
-//     );
-//   }
-// }
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
 
   @override
+  State<HomePage> createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<HomePage> {
+  // This value is to select path of the image
+  File ? _selectedImage;
+  var imageWidth = false;
+  var imageHeight = false;
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+  return Scaffold(
       appBar: AppBar(title: const Text("Home Page"),
       ),
       body: Center(
@@ -45,6 +39,54 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // Display image
+              Padding(
+                padding: EdgeInsets.fromLTRB(imageWidth ? 0 : 140, 0, 0, 20),
+                child: SizedBox(
+                  width: imageWidth ? double.infinity : 100,
+                  height: imageHeight ? 300 : 0,
+                  child: _selectedImage!=null ? Image.file(_selectedImage!): const Text("Please selected an image",
+                  style: TextStyle(color: Colors.red, fontSize: 12.0),
+
+                  ),
+                ),
+              ),
+              // Button pick image from gallery
+              Padding(
+              padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
+
+              child: MaterialButton(
+                color: Colors.blue,
+                child: const Text(
+                  "Pick image from Gallery",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                ),
+                onPressed: () {
+                  _pickImageFromGallery();
+                },
+              )
+              ),
+              Padding(
+              padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
+
+              child: MaterialButton(
+                color: Colors.red,
+                child: const Text(
+                  "Pick image from Camera",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                ),
+                onPressed: () {},
+              )
+              ),
+ 
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: SizedBox(
@@ -71,10 +113,26 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+
+ 
+                
             ]
         ),
       )
       
     );
   }
-}
+  // Function to select image from library
+   Future _pickImageFromGallery() async{
+      final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+     setState(() {
+    imageHeight = true;
+    imageWidth = true;
+    _selectedImage = File(returnedImage!.path);
+    });
+   }
+
+  
+  }
+
+
