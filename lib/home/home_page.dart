@@ -28,9 +28,9 @@ class _MyHomeState extends State<HomePage> {
   File? _selectedImage;
   var imageWidth = false;
   var imageHeight = false;
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
-  int _accountColor = Colors.grey.value;
+  int _accountColor = Colors.blue.value;
   int _cameraColor = Colors.grey.value;
   int _settingsColor = Colors.grey.value;
   int _galleryColor = Colors.grey.value;
@@ -73,10 +73,13 @@ class _MyHomeState extends State<HomePage> {
                     height: imageHeight ? 300 : 0,
                     child: _selectedImage != null
                         ? Image.file(_selectedImage!)
-                        : const Text(
+                        : const 
+                        Center(
+                        child: Text(
                             "Please selected an image",
                             style: TextStyle(color: Colors.red, fontSize: 12.0),
                           ),
+                        )
                   ),
                 ),
                 // //COUNT BUTTON
