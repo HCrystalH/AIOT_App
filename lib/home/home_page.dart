@@ -8,6 +8,7 @@ import 'package:my_flutter_app/authentication/auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_flutter_app/pages/account_page.dart';
 
 // import 'package:my_flutter_app/authentication/sign_in.dart';
 
@@ -24,6 +25,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _MyHomeState extends State<HomePage> {
+  PageController _pageController = PageController();
+
   // This value is to select path of the image
   File? _selectedImage;
   var imageWidth = false;
@@ -60,7 +63,13 @@ class _MyHomeState extends State<HomePage> {
             ),
           ],
         ),
-        body: Center(
+        body: 
+        PageView(
+        controller: _pageController,
+        children: [
+        accountPage(),
+
+        Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,64 +91,6 @@ class _MyHomeState extends State<HomePage> {
                         )
                   ),
                 ),
-                // //COUNT BUTTON
-                // Padding(
-                // padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
-
-                // child: MaterialButton(
-                //   color: Colors.blue,
-                //   child: const Text(
-                //     "Count",
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 16
-                //     ),
-                //   ),
-                //   onPressed: () {
-                //     countObject(_selectedImage);
-                //   },
-                // )
-                // ),
-                // Button pick image from gallery
-                // Padding(
-                //     padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment
-                //           .start, // Adjust the alignment as needed
-                //       children: [
-                //         Expanded(
-                //             child: MaterialButton(
-                //           color: Colors.blue,
-                //           child: const Text(
-                //             "Gallery",
-                //             style: TextStyle(
-                //               color: Colors.white,
-                //               fontWeight: FontWeight.bold,
-                //               fontSize: 16,
-                //             ),
-                //           ),
-                //           onPressed: () {
-                //             _pickImageFromGallery();
-                //           },
-                //         )),
-                //         Expanded(
-                //             child: MaterialButton(
-                //           color: Colors.red,
-                //           child: const Text(
-                //             "Camera",
-                //             style: TextStyle(
-                //               color: Colors.white,
-                //               fontWeight: FontWeight.bold,
-                //               fontSize: 16,
-                //             ),
-                //           ),
-                //           onPressed: () {
-                //             // Add your camera logic here
-                //           },
-                //         )),
-                //       ],
-                //     )),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                     child: Row(
@@ -178,6 +129,7 @@ class _MyHomeState extends State<HomePage> {
                             },
                           )))
                         ])),
+                
 
                 // Padding(
                 //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
@@ -205,7 +157,78 @@ class _MyHomeState extends State<HomePage> {
                 //         }),
                 //   ),
                 // ),
-                BottomNavigationBar(
+                
+                // BottomNavigationBar(
+                //   items: [
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.account_circle,
+                //           color: Color(_accountColor)),
+                //       label: 'Account',
+                //     ),
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.settings, color: Color(_settingsColor)),
+                //       label: 'Settings',
+                //     ),
+                //     BottomNavigationBarItem(
+                //       icon: Image.asset('assets/camera.png',
+                //           width: 24.0,
+                //           height: 24.0,
+                //           color: Color(_cameraColor)),
+                //       label: 'Camera',
+                //     ),
+                //     BottomNavigationBarItem(
+                //       icon: Icon(Icons.photo_library,
+                //           color: Color(_galleryColor)),
+                //       label: 'Gallery',
+                //     ),
+                //   ],
+                //   selectedItemColor: Colors.blue,
+                //   unselectedItemColor: Colors.grey,
+                //   currentIndex: _currentIndex,
+                //   onTap: (index) {
+                //     setState(() {
+                //       // Reset all colors to grey
+                //       _accountColor = Colors.grey.value;
+                //       _cameraColor = Colors.grey.value;
+                //       _settingsColor = Colors.grey.value;
+                //       _galleryColor = Colors.grey.value;
+
+                //       // Set the selected icon color to blue
+                //       switch (index) {
+                //         case 0:
+                //           _currentIndex = 0;
+                //           _accountColor = Colors.blue.value;
+                //           break;
+                //         case 1:
+                //           _currentIndex = 1;
+                //           _settingsColor = Colors.blue.value;
+                //           break;
+                //         case 2:
+                //           _pickImageFromCamera();
+                //           _currentIndex = 2;
+                //           _cameraColor = Colors.blue.value;
+                //           break;
+                //         case 3:
+                //           _pickImageFromGallery();
+                //           _currentIndex = 3;
+                //           _galleryColor = Colors.blue.value;
+                //           break;
+                //       }
+                //     });
+
+                //     // Handle navigation or any other action based on the selected index
+                //     print('Tapped on item $index');
+                //   },
+                // ),
+              ]),
+        )],
+        // onPageChanged: (index) {
+        //   setState(() {
+        //     _currentIndex = index;
+        //   });
+        // },        
+        ),
+       bottomNavigationBar: BottomNavigationBar(
                   items: [
                     BottomNavigationBarItem(
                       icon: Icon(Icons.account_circle,
@@ -233,6 +256,11 @@ class _MyHomeState extends State<HomePage> {
                   unselectedItemColor: Colors.grey,
                   currentIndex: _currentIndex,
                   onTap: (index) {
+          _pageController.animateToPage(
+            index,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
                     setState(() {
                       // Reset all colors to grey
                       _accountColor = Colors.grey.value;
@@ -267,8 +295,8 @@ class _MyHomeState extends State<HomePage> {
                     print('Tapped on item $index');
                   },
                 ),
-              ]),
-        ));
+        
+        );
   }
 
   // Function to select image from library
