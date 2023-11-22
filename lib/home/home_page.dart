@@ -44,7 +44,7 @@ class _MyHomeState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(imageWidth ? 0 : 140, 0, 0, 20),
                 child: SizedBox(
-                  width: imageWidth ? double.infinity : 100,
+                  width: imageWidth ? double.infinity : 0,
                   height: imageHeight ? 300 : 0,
                   child: _selectedImage!=null ? Image.file(_selectedImage!): const Text("Please selected an image",
                   style: TextStyle(color: Colors.red, fontSize: 12.0),
@@ -52,11 +52,87 @@ class _MyHomeState extends State<HomePage> {
                   ),
                 ),
               ),
-              //COUNT BUTTON
-              Padding(
-              padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
+              // //COUNT BUTTON
+              // Padding(
+              // padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
 
+              // child: MaterialButton(
+              //   color: Colors.blue,
+              //   child: const Text(
+              //     "Count",
+              //     style: TextStyle(
+              //       color: Colors.white,
+              //       fontWeight: FontWeight.bold,
+              //       fontSize: 16
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     countObject(_selectedImage);
+              //   },
+              // )
+              // ),
+              // Button pick image from gallery
+              Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start, // Adjust the alignment as needed
+                children: [
+                  Expanded(
+                  child: MaterialButton(
+                    color: Colors.blue,
+                    child: const Text(
+                    "Gallery",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                ),
+                onPressed: () {
+               _pickImageFromGallery();
+                },
+               )),
+                Expanded(
               child: MaterialButton(
+                color: Colors.red,
+                child: const Text(
+                "Camera",
+                style: TextStyle(
+                 color: Colors.white,
+                 fontWeight: FontWeight.bold,
+                fontSize: 16,
+                 ),
+                  ),
+                  onPressed: () {
+                  // Add your camera logic here
+                     },
+                   )),
+                 ],
+                )
+              ),
+              Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+              Expanded(
+              child: MaterialButton(
+                color: Colors.red,
+                child: const Text(
+                  "Remove",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                ),
+                onPressed: () {
+                  removeImage();
+                },
+              )
+              ),
+              Expanded(
+                child: MaterialButton(
                 color: Colors.blue,
                 child: const Text(
                   "Count",
@@ -70,40 +146,8 @@ class _MyHomeState extends State<HomePage> {
                   countObject(_selectedImage);
                 },
               )
-              ),
-              // Button pick image from gallery
-              Padding(
-              padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
-
-              child: MaterialButton(
-                color: Colors.blue,
-                child: const Text(
-                  "Pick image from Gallery",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                  ),
-                ),
-                onPressed: () {
-                  _pickImageFromGallery();
-                },
               )
-              ),
-              Padding(
-              padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
-
-              child: MaterialButton(
-                color: Colors.red,
-                child: const Text(
-                  "Pick image from Camera",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16
-                  ),
-                ),
-                onPressed: () {},
+              ]
               )
               ),
  
@@ -151,6 +195,15 @@ class _MyHomeState extends State<HomePage> {
     _selectedImage = File(returnedImage!.path);
     });
    }
+
+  //
+  void removeImage () {
+    setState(() {
+    imageHeight = false;
+    imageWidth = false;
+    _selectedImage = null;
+    });
+  }
   }
 
   // Function to count
