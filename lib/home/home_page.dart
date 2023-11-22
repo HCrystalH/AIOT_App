@@ -40,29 +40,38 @@ class _MyHomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Home Page"),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.exit_to_app),
-                    onPressed: () {
-                      // Add your sign-out logic here
-                      //  _signOut();
-                    },
-                  ),
-                  const Text(
-                    'Log Out',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+appBar: AppBar(
+  title: const Text("Home Page"),
+  actions: [
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          // Add your sign-out logic here
+          AuthService().signOutGoogle();
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+            ModalRoute.withName('/'),
+          );
+        },
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                // This IconButton is optional, you can keep it or remove it
+              },
+            ),
+            const Text(
+              'Log Out',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),
+      ),
+    ),
+  ],
+),
         body: 
         PageView(
         controller: _pageController,
