@@ -29,7 +29,7 @@ class _MyHomeState extends State<HomePage> {
   var imageWidth = false;
   var imageHeight = false;
   int _currentIndex = 0;
-
+  int ivisible = 1;
   int _accountColor = Colors.blue.value;
   int _cameraColor = Colors.grey.value;
   int _settingsColor = Colors.grey.value;
@@ -146,7 +146,9 @@ class _MyHomeState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
-                              child: MaterialButton(
+                            child: Visibility(
+                            visible: ivisible == 0,
+                            child: MaterialButton(
                             color: Colors.red,
                             child: const Text(
                               "Remove",
@@ -158,8 +160,10 @@ class _MyHomeState extends State<HomePage> {
                             onPressed: () {
                               removeImage();
                             },
-                          )),
+                          ))),
                           Expanded(
+                            child:Visibility(
+                            visible: ivisible == 0,
                               child: MaterialButton(
                             color: Colors.blue,
                             child: const Text(
@@ -172,7 +176,7 @@ class _MyHomeState extends State<HomePage> {
                             onPressed: () {
                               countObject(_selectedImage);
                             },
-                          ))
+                          )))
                         ])),
 
                 // Padding(
@@ -242,13 +246,14 @@ class _MyHomeState extends State<HomePage> {
                           _currentIndex = 0;
                           _accountColor = Colors.blue.value;
                           break;
-                        case 2:
-                          _currentIndex = 2;
-                          _cameraColor = Colors.blue.value;
-                          break;
                         case 1:
                           _currentIndex = 1;
                           _settingsColor = Colors.blue.value;
+                          break;
+                        case 2:
+                          _pickImageFromCamera();
+                          _currentIndex = 2;
+                          _cameraColor = Colors.blue.value;
                           break;
                         case 3:
                           _pickImageFromGallery();
@@ -271,15 +276,28 @@ class _MyHomeState extends State<HomePage> {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
+      ivisible = 0;
+      imageHeight = true;
+      imageWidth = true;
+      _selectedImage = File(returnedImage!.path);
+    });
+  }
+// Function to pick image from camera
+  Future _pickImageFromCamera() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    setState(() {
+      ivisible = 0;
       imageHeight = true;
       imageWidth = true;
       _selectedImage = File(returnedImage!.path);
     });
   }
 
-  //
+  // Function to remove Image
   void removeImage() {
     setState(() {
+      ivisible = 1;
       imageHeight = false;
       imageWidth = false;
       _selectedImage = null;
