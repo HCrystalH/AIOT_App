@@ -49,8 +49,6 @@ class RegisterFormState extends State<RegisterForm>{
         title: const Text('Sign in to Counting app'),
       ),
       body: Container(
-      
-        
         child: Padding(
 
         padding: const EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),

@@ -1,8 +1,9 @@
 //import 'dart:html';
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:my_flutter_app/authentication/auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
@@ -50,6 +51,25 @@ class _MyHomeState extends State<HomePage> {
 
                   ),
                 ),
+              ),
+              //COUNT BUTTON
+              Padding(
+              padding: const EdgeInsets.fromLTRB(100, 0, 0, 20),
+
+              child: MaterialButton(
+                color: Colors.blue,
+                child: const Text(
+                  "Count",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  ),
+                ),
+                onPressed: () {
+                  countObject(_selectedImage);
+                },
+              )
               ),
               // Button pick image from gallery
               Padding(
@@ -131,8 +151,29 @@ class _MyHomeState extends State<HomePage> {
     _selectedImage = File(returnedImage!.path);
     });
    }
-
-  
   }
 
+  // Function to count
+  Future<void> countObject(File ? imagefile) async{
+      try{
+        // Upload the image to the server
+        final response = await http.post(
+          Uri.parse(''),  // url 
+          body:{
+            'image':Base64Encoder().convert(await imagefile!.readAsBytes()),
+          }
+        );
+        if(response.statusCode == 200){
+          // Get the count of detected object from the server's response
+          final countData = jsonDecode(response.body);
+          final count = countData['count'];
+
+          return count;
+        }else {throw Exception('Error uploading image to server');}
+      }catch(Error){
+        print('Error counting objects: ${Error.toString()}');
+        
+      }
+  }
+  
 
