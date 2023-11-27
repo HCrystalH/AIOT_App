@@ -1,35 +1,76 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+Uint8List? _image;
+// This is the support function for choosing image with the type of _image is Unit8List
+pickImage(ImageSource source) async {
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _file = await _imagePicker.pickImage(source: source);
+  if (_file != null) {
+    return await _file.readAsBytes();
+  }
+  print('No Images Selected');
+}
 
 class accountPage extends StatefulWidget {
-
   @override
   State<accountPage> createState() => _MyaccountPageState();
 }
 
 class _MyaccountPageState extends State<accountPage> {
+  //This function is to choose image from gallery
+  void selectImage() async {
+    Uint8List? img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome to Account Page!',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add your button press logic here
-                print('Button Pressed!');
-              },
-              child: Text('Press Me'),
-            ),
-          ],
+  body: Column(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        child: Center(
+          child: Stack(
+            children: [
+              _image != null
+                  ? CircleAvatar(
+                      radius: 64,
+                      backgroundImage: MemoryImage(_image!),
+                    )
+                  : const CircleAvatar(
+                      radius: 64,
+                      backgroundImage: NetworkImage(
+                          'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png'),
+                    ),
+              Positioned(
+                bottom: -15,
+                left: 80,
+                child: IconButton(
+                  onPressed: selectImage,
+                  icon: const Icon(Icons.add_a_photo),
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    );
+      SizedBox(height: 10.0),
+      Text(
+        'Email@example.com',
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.grey,
+        ),
+      ),
+    ],
+  ),
+);
   }
 }

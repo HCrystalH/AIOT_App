@@ -59,7 +59,6 @@ appBar: AppBar(
             IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () {
-                // This IconButton is optional, you can keep it or remove it
               },
             ),
             const Text(
@@ -267,7 +266,7 @@ appBar: AppBar(
                   onTap: (index) {
           _pageController.animateToPage(
             index,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             curve: Curves.ease,
           );
                     setState(() {
