@@ -329,7 +329,7 @@ appBar: AppBar(
       _selectedImage = File(returnedImage!.path);
     });
   }
-
+  
   // Function to remove Image
   void removeImage() {
     setState(() {
