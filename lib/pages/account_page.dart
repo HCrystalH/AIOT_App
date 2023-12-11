@@ -45,9 +45,11 @@ class _MyaccountPageState extends State<accountPage> {
                       backgroundImage: MemoryImage(_image!),
                     )
                   : const CircleAvatar(
-                      radius: 64,
+                      radius: 68,
                       backgroundImage: NetworkImage(
-                          'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png'),
+                          'https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png'),
+                            backgroundColor: Colors.transparent, // Set a transparent background
+
                     ),
               Positioned(
                 bottom: -15,
