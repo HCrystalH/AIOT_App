@@ -345,15 +345,17 @@ appBar: AppBar(
 Future<void> countObject(File? imagefile) async {
   try {
     // Upload the image to the server
-    final response = await http.post(Uri.parse(''), // url
+    final response = await http.post(Uri.parse('http://192.168.35.1:5000/predict'), // url
         body: {
           'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
         });
+    debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
       // Get the count of detected object from the server's response
-      final countData = jsonDecode(response.body);
-      final count = countData['count'];
-
+      final countData = jsonDecode(response.body);    
+      final count = countData.length;
+      debugPrint(count.toString());
+      // debugPrint(countData.toString());
       return count;
     } else {
       throw Exception('Error uploading image to server');
