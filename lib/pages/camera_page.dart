@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class settingPage extends StatefulWidget {
+class cameraPage extends StatefulWidget {
   // const MyWidget({super.key});
 
   @override
-  State<settingPage> createState() => _MysettingPageState();
+  State<cameraPage> createState() => _MycameraPageState();
 }
 
-class _MysettingPageState extends State<settingPage> {
+class _MycameraPageState extends State<cameraPage> {
   @override
   Widget build(BuildContext context) {
     return Container(); 
