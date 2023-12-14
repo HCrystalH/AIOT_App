@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+var url ='http://192.168.35.1:5000/predict';
+
 class settingPage extends StatefulWidget {
   // const MyWidget({super.key});
 
@@ -12,4 +14,8 @@ class _MysettingPageState extends State<settingPage> {
   Widget build(BuildContext context) {
     return Container(); 
   }
+
+  // Function<void> ChangeURL(){
+
+  // }
 }

@@ -6,7 +6,7 @@ import 'package:my_flutter_app/authentication/auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'setting_page.dart';
 class galleryPage extends StatefulWidget {
   // const MyWidget({super.key});
 
@@ -14,14 +14,17 @@ class galleryPage extends StatefulWidget {
   State<galleryPage> createState() => _MygalleryPageState();
 }
 
+var countResult = 0;
+
 class _MygalleryPageState extends State<galleryPage> {
   // This value is to select path of the image
   File? _selectedImage;
   var imageWidth = false;
   var imageHeight = false;
   int _currentIndex = 0;
-  String selectedType = 'TYPE5'; // Default value
-
+  String selectedType = 'MODEL5'; // Default value
+  int result =0;
+  
   int ivisible = 1;
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class _MygalleryPageState extends State<galleryPage> {
                     selectedType = newValue!;
                   });
                 },
-                items: <String>['TYPE5', 'TYPE6']
+                items: <String>['MODEL5', 'MODEL6']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -121,6 +124,7 @@ class _MygalleryPageState extends State<galleryPage> {
                             ),
                             onPressed: () {
                               removeImage();
+                              
                             },
                           ))),
                   Expanded(
@@ -136,7 +140,8 @@ class _MygalleryPageState extends State<galleryPage> {
                                   fontSize: 16),
                             ),
                             onPressed: () {
-                              countObject(_selectedImage);
+                              countObject(_selectedImage,selectedType);
+
                             },
                           )))
                 ])),
@@ -149,12 +154,14 @@ class _MygalleryPageState extends State<galleryPage> {
                           visible: ivisible == 0,
                           child: MaterialButton(
                             color: Color.fromARGB(255, 232, 241, 67),
-                            child: const Text(
-                              "Number of objects counted: ",
-                              style: TextStyle(
+                            child: Text(
+                              
+                              "Number of objects counted: $countResult",
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 120, 4, 4),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
+                              
                             ),
                             onPressed: () {
                               // removeImage();
@@ -184,31 +191,68 @@ class _MygalleryPageState extends State<galleryPage> {
       imageHeight = false;
       imageWidth = false;
       _selectedImage = null;
+      countResult = 0;
     });
   }
-}
-
+  
 // Function to count
-Future<void> countObject(File? imagefile) async {
+Future<void> countObject(File? imagefile, String? model) async {
+  // final dio = Dio();
+  // final headers = {'Connection': 'Keep-Alive'};
+  // dio.options.headers = headers;
+  // dio.options.connectTimeout = Duration(seconds: 10000); // Set timeout to 5 seconds
+  // dio.options.receiveTimeout = Duration(seconds: 10000); // Set timeout to 5 seconds
   try {
     // Upload the image to the server
-    final response =
-        await http.post(Uri.parse('http://192.168.35.1:5000/predict'), // url
-            body: {
-          'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
-        });
+    final response = await http.post(
+      Uri.parse(url), // url
+      headers: {
+        'Connection': 'Keep-Alive',
+        'timeout': 'Duration(seconds: 5000)',
+      },
+      body: {  
+        'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
+        /* if want to use other models, add more button "MODEL5" "MODEL6"
+           use function and return or use global var
+        */
+        'model': model,
+      },
+    ).timeout(Duration(seconds: 5000));
+    // final image = Base64Encoder().convert(await imagefile!.readAsBytes());
+    // final formData = FormData.fromMap({
+    // 'image': image,
+    // 'model': 'MODEL5',
+    // });
+   
+    // final response = await dio.post(
+    //   ('http://192.168.35.1:5000/predict'),
+    //   data: formData,
+    // );
+   
     debugPrint(response.statusCode.toString());
+   
     if (response.statusCode == 200) {
       // Get the count of detected object from the server's response
-      final countData = jsonDecode(response.body);
-      final count = countData.length;
+      final results = jsonDecode(response.body);    
+      final result = results[0];
+      final count = result['predictions'].length;
+      // to draw
+      final box = result['predictions'][0]['box'];
       debugPrint(count.toString());
+      // debugPrint(box.toString());
+
+      // debugPrint(result.toString());
       // debugPrint(countData.toString());
-      return count;
+      // return results;
+      setState(() {
+        countResult = count;
+      });
     } else {
       throw Exception('Error uploading image to server');
     }
   } catch (Error) {
     print('Error counting objects: ${Error.toString()}');
   }
+}
+
 }
