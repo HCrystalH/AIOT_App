@@ -41,13 +41,13 @@ class _MyaccountPageState extends State<accountPage> {
             children: [
               _image != null
                   ? CircleAvatar(
-                      radius: 64,
+                      radius: 60,
                       backgroundImage: MemoryImage(_image!),
                     )
                   : const CircleAvatar(
-                      radius: 68,
+                      radius: 60,
                       backgroundImage: NetworkImage(
-                          'https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png'),
+                          'https://cdn-icons-png.flaticon.com/512/9131/9131529.png'),
                             backgroundColor: Colors.transparent, // Set a transparent background
 
                     ),
