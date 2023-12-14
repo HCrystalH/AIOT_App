@@ -1,5 +1,5 @@
 //import 'dart:html';
-
+import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -343,20 +343,54 @@ appBar: AppBar(
 
 // Function to count
 Future<void> countObject(File? imagefile) async {
+  // final dio = Dio();
+  // final headers = {'Connection': 'Keep-Alive'};
+  // dio.options.headers = headers;
+  // dio.options.connectTimeout = Duration(seconds: 10000); // Set timeout to 5 seconds
+  // dio.options.receiveTimeout = Duration(seconds: 10000); // Set timeout to 5 seconds
   try {
     // Upload the image to the server
-    final response = await http.post(Uri.parse('http://192.168.35.1:5000/predict'), // url
-        body: {
-          'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
-        });
+    final response = await http.post(
+      Uri.parse('http://192.168.35.1:5000/predict'), // url
+      headers: {
+        'Connection': 'Keep-Alive',
+        'timeout': 'Duration(seconds: 5000)',
+      },
+      body: {  
+        'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
+        /* if want to use other models, add more button "MODEL5" "MODEL6"
+           use function and return or use global var
+        */
+        'model': "MODEL5",
+      },
+    ).timeout(Duration(seconds: 5000));
+    // final image = Base64Encoder().convert(await imagefile!.readAsBytes());
+    // final formData = FormData.fromMap({
+    // 'image': image,
+    // 'model': 'MODEL5',
+    // });
+   
+    // final response = await dio.post(
+    //   ('http://192.168.35.1:5000/predict'),
+    //   data: formData,
+    // );
+   
     debugPrint(response.statusCode.toString());
+   
     if (response.statusCode == 200) {
       // Get the count of detected object from the server's response
-      final countData = jsonDecode(response.body);    
-      final count = countData.length;
+      final results = jsonDecode(response.body);    
+      final result = results[0];
+      final count = result['predictions'].length;
+      // to draw
+      final box = result['predictions'][0]['box'];
       debugPrint(count.toString());
+      // debugPrint(box.toString());
+     
+      // debugPrint(result.toString());
       // debugPrint(countData.toString());
       return count;
+      // return results;
     } else {
       throw Exception('Error uploading image to server');
     }
