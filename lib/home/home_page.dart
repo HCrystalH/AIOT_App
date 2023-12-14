@@ -33,7 +33,7 @@ class _MyHomeState extends State<HomePage> {
   var imageHeight = false;
   int _currentIndex = 0;
   int ivisible = 1;
-  int _accountColor = Colors.blue.value;
+  int _accountColor = const Color.fromARGB(255, 132, 181, 53).value;
   int _cameraColor = Colors.grey.value;
   int _settingsColor = Colors.grey.value;
   int _galleryColor = Colors.grey.value;
@@ -41,7 +41,10 @@ class _MyHomeState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 appBar: AppBar(
-  title: const Text("Home Page"),
+  title: const Text("Home Page"),         
+backgroundColor: const Color.fromARGB(255, 132, 181, 53), // Use the RGB value for matcha
+
+  
   actions: [
     Padding(
       padding: const EdgeInsets.all(8.0),
@@ -260,7 +263,7 @@ appBar: AppBar(
                       label: 'Gallery',
                     ),
                   ],
-                  selectedItemColor: Colors.blue,
+                  selectedItemColor:  const Color.fromARGB(255, 132, 181, 53),
                   unselectedItemColor: Colors.grey,
                   currentIndex: _currentIndex,
                   onTap: (index) {
@@ -275,26 +278,28 @@ appBar: AppBar(
                       _cameraColor = Colors.grey.value;
                       _settingsColor = Colors.grey.value;
                       _galleryColor = Colors.grey.value;
+                       Color newColor = const Color.fromARGB(255, 132, 181, 53);
+
 
                       // Set the selected icon color to blue
                       switch (index) {
                         case 0:
                           _currentIndex = 0;
-                          _accountColor = Colors.blue.value;
+                          _accountColor = newColor.value;
                           break;
                         case 1:
                           _currentIndex = 1;
-                          _settingsColor = Colors.blue.value;
+                          _settingsColor = newColor.value;
                           break;
                         case 2:
                           _pickImageFromCamera();
                           _currentIndex = 2;
-                          _cameraColor = Colors.blue.value;
+                          _cameraColor = newColor.value;
                           break;
                         case 3:
                           _pickImageFromGallery();
                           _currentIndex = 3;
-                          _galleryColor = Colors.blue.value;
+                          _galleryColor = newColor.value;
                           break;
                       }
                     });
