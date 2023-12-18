@@ -36,12 +36,12 @@ class _MysettingPageState extends State<settingPage> {
                 children: [
                   TextField(
                     controller: urlController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                     ),
                   ),
                   SizedBox(height: 5),
-                  Text(
+                  const Text(
                     'Enter or modify the existing URL and click "Change" to update.',
                     style: TextStyle(
                       fontSize: 12,
@@ -76,16 +76,16 @@ class _MysettingPageState extends State<settingPage> {
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
-                    TextSpan(
+                    const TextSpan(
                       text: 'The existing URL: \n',
                       style: TextStyle(
-                        color: Colors.black, // Set the color to red
+                        color: Colors.black, 
                       ),
                     ),
                     TextSpan(
                       text: url,
-                      style: TextStyle(
-                        color: Colors.red, // Set the color to red
+                      style: const TextStyle(
+                        color: Colors.red, 
                       ),
                     ),
                   ],
