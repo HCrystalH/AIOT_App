@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_flutter_app/authentication/auth.dart';
-import 'package:my_flutter_app/authentication/login_page.dart';
-import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:image_picker/image_picker.dart';
 import 'setting_page.dart';
 class galleryPage extends StatefulWidget {
@@ -15,7 +12,7 @@ class galleryPage extends StatefulWidget {
 }
 
 var countResult = 0;
-
+var top,left,width,height;
 class _MygalleryPageState extends State<galleryPage> {
   // This value is to select path of the image
   File? _selectedImage;
@@ -197,11 +194,6 @@ class _MygalleryPageState extends State<galleryPage> {
   
 // Function to count
 Future<void> countObject(File? imagefile, String? model) async {
-  // final dio = Dio();
-  // final headers = {'Connection': 'Keep-Alive'};
-  // dio.options.headers = headers;
-  // dio.options.connectTimeout = Duration(seconds: 10000); // Set timeout to 5 seconds
-  // dio.options.receiveTimeout = Duration(seconds: 10000); // Set timeout to 5 seconds
   try {
     // Upload the image to the server
     final response = await http.post(
@@ -218,17 +210,7 @@ Future<void> countObject(File? imagefile, String? model) async {
         'model': model,
       },
     ).timeout(Duration(seconds: 5000));
-    // final image = Base64Encoder().convert(await imagefile!.readAsBytes());
-    // final formData = FormData.fromMap({
-    // 'image': image,
-    // 'model': 'MODEL5',
-    // });
-   
-    // final response = await dio.post(
-    //   ('http://192.168.35.1:5000/predict'),
-    //   data: formData,
-    // );
-   
+    
     debugPrint(response.statusCode.toString());
    
     if (response.statusCode == 200) {
@@ -255,4 +237,31 @@ Future<void> countObject(File? imagefile, String? model) async {
   }
 }
 
+}
+
+
+class CustomPainter{} 
+class BoundingBoxPainter extends CustomPainter {
+
+  final double top;
+  final double left;
+  final double width;
+  final double height;
+
+  BoundingBoxPainter(this.top, this.left, this.width, this.height);
+
+  @override
+  void draw(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.red // Adjust color
+      ..strokeWidth = 2.0; // Adjust line width
+
+    final topY = top * size.height; // Convert relative top to absolute pixel position
+    final leftX = left * size.width; // Convert relative left to absolute pixel position
+    final bottomY = topY + height * size.height; // Calculate bottom Y based on height
+
+    // Draw two vertical lines for the bounding box
+    canvas.drawLine(Offset(leftX, topY), Offset(leftX, bottomY), paint);
+    canvas.drawLine(Offset(leftX + width * size.width, topY), Offset(leftX + width * size.width, bottomY), paint);
+  }
 }

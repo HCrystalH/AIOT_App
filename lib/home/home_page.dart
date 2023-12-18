@@ -1,26 +1,20 @@
 //import 'dart:html';
 
-import 'dart:convert';
+// import 'dart:convert';
+// import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+// import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:my_flutter_app/authentication/auth.dart';
 import 'package:my_flutter_app/authentication/login_page.dart';
-import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:my_flutter_app/pages/account_page.dart';
 import 'package:my_flutter_app/pages/setting_page.dart';
 import 'package:my_flutter_app/pages/camera_page.dart';
 import 'package:my_flutter_app/pages/gallery_page.dart';
 
-// import 'package:my_flutter_app/authentication/sign_in.dart';
-
-// class MyWidget extends StatefulWidget {
-//   const MyWidget({super.key});
-
-//   @override
-//   State<MyWidget> createState() => _MyWidgetState();
-// }
 
 class HomePage extends StatefulWidget {
   @override
@@ -40,31 +34,32 @@ class _MyHomeState extends State<HomePage> {
   int _cameraColor = Colors.grey.value;
   int _settingsColor = Colors.grey.value;
   int _galleryColor = Colors.grey.value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-appBar: AppBar(
-  title: const Text("Home Page"),         
-backgroundColor: const Color.fromARGB(255, 132, 181, 53), // Use the RGB value for matcha
+      appBar: AppBar(
+        title: const Text("Home Page"),         
+      backgroundColor: const Color.fromARGB(255, 132, 181, 53), // Use the RGB value for matcha
 
-  
-  actions: [
-    Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () {
-          // Add your sign-out logic here
-          AuthService().signOutGoogle();
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const LoginPage()),
-            ModalRoute.withName('/'),
-          );
-        },
+      actions: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {
+            // Add your sign-out logic here
+            AuthService().signOutGoogle();
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+              ModalRoute.withName('/'),
+            );
+          },
         child: Row(
           children: [
             IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () {
+                
               },
             ),
             const Text(
@@ -81,81 +76,12 @@ backgroundColor: const Color.fromARGB(255, 132, 181, 53), // Use the RGB value f
         PageView(
         controller: _pageController,
         children: [
-        accountPage(),
-        settingPage(),
-        cameraPage(),
-        galleryPage(),
-        // Center(
-        //   child: Column(
-        //       mainAxisAlignment: MainAxisAlignment.end,
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: <Widget>[
-        //         // Display image
-        //         Padding(
-        //           padding: EdgeInsets.fromLTRB(imageWidth ? 0 : 140, 0, 0, 20),
-        //           child: SizedBox(
-        //             width: imageWidth ? double.infinity : 0,
-        //             height: imageHeight ? 300 : 0,
-        //             child: _selectedImage != null
-        //                 ? Image.file(_selectedImage!)
-        //                 : const 
-        //                 Center(
-        //                 child: Text(
-        //                     "Please selected an image",
-        //                     style: TextStyle(color: Colors.red, fontSize: 12.0),
-        //                   ),
-        //                 )
-        //           ),
-        //         ),
-        //         Padding(
-        //             padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-        //             child: Row(
-        //                 mainAxisAlignment: MainAxisAlignment.start,
-        //                 children: [
-        //                   Expanded(
-        //                     child: Visibility(
-        //                     visible: ivisible == 0,
-        //                     child: MaterialButton(
-        //                     color: Colors.red,
-        //                     child: const Text(
-        //                       "Remove",
-        //                       style: TextStyle(
-        //                           color: Colors.white,
-        //                           fontWeight: FontWeight.bold,
-        //                           fontSize: 16),
-        //                     ),
-        //                     onPressed: () {
-        //                       removeImage();
-        //                     },
-        //                   ))),
-        //                   Expanded(
-        //                     child:Visibility(
-        //                     visible: ivisible == 0,
-        //                       child: MaterialButton(
-        //                     color: Colors.blue,
-        //                     child: const Text(
-        //                       "Count",
-        //                       style: TextStyle(
-        //                           color: Colors.white,
-        //                           fontWeight: FontWeight.bold,
-        //                           fontSize: 16),
-        //                     ),
-        //                     onPressed: () {
-        //                       countObject(_selectedImage);
-        //                     },
-        //                   )))
-        //                 ])),
-                
-
-  
-        //       ]),
-        // )
+          accountPage(),
+          settingPage(),
+          cameraPage(),
+          galleryPage(),
         ],
-        // onPageChanged: (index) {
-        //   setState(() {
-        //     _currentIndex = index;
-        //   });
-        // },        
+             
         ),
        bottomNavigationBar: BottomNavigationBar(
                   items: [
@@ -197,7 +123,6 @@ backgroundColor: const Color.fromARGB(255, 132, 181, 53), // Use the RGB value f
                       _settingsColor = Colors.grey.value;
                       _galleryColor = Colors.grey.value;
                        Color newColor = const Color.fromARGB(255, 132, 181, 53);
-
 
                       // Set the selected icon color to blue
                       switch (index) {
