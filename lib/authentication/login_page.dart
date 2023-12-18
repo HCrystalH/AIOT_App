@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         _showPass ? "HIDE" : "SHOW",
                         style: const TextStyle(
-                            color: Color.fromARGB(255, 132, 181, 53),
+                            color: Color.fromARGB(255, 121, 180, 137),
                             fontSize: 13,
                             fontWeight: FontWeight.bold),
                       ),
@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Forgot Password?',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 132, 181, 53),
+                          color: Color.fromARGB(255, 121, 180, 137),
                         ),
                       ),
                     ),
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),
-                      backgroundColor: const Color.fromARGB(255, 132, 181, 53),
+                      backgroundColor: const Color.fromARGB(255, 121, 180, 137),
                       textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -300,7 +300,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Sign up',
                         style: TextStyle(
-                          color: Color.fromARGB(255, 132, 181, 53),
+                          color: Color.fromARGB(255, 121, 180, 137),
                           fontSize: 15,
                         ),
                         textAlign: TextAlign.left,
