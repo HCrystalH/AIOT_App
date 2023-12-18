@@ -13,10 +13,7 @@ class _MysettingPageState extends State<settingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Setting Page"),         
-      backgroundColor: const Color.fromARGB(255, 132, 181, 53), // Use the RGB value for matcha
-      )
+     
     ); 
   }
 
