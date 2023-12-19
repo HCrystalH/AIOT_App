@@ -59,7 +59,6 @@ class _MysettingPageState extends State<settingPage> {
                   // Check if the text field is not empty
                   if (urlController.text.isNotEmpty) {
                     setState(() {
-                      // Update the url variable
                       url = urlController.text;
                     });
                   }

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_flutter_app/authentication/login_page.dart';
 
 Uint8List? _image;
 // This is the support function for choosing image with the type of _image is Unit8List
@@ -63,10 +64,10 @@ class _MyaccountPageState extends State<accountPage> {
           ),
         ),
       ),
-      SizedBox(height: 10.0),
+      const SizedBox(height: 10.0),
       Text(
-        'Email@example.com',
-        style: TextStyle(
+        email,
+        style: const TextStyle(
           fontSize: 16.0,
           color: Colors.grey,
         ),

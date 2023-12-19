@@ -3,6 +3,7 @@ import 'package:my_flutter_app/home/home_page.dart';
 import 'package:my_flutter_app/authentication/register.dart';
 import 'forget_password.dart';
 import 'auth.dart';
+String email = '';
 
 @immutable
 class LoginPage extends StatefulWidget {
@@ -23,11 +24,10 @@ class _LoginPageState extends State<LoginPage> {
   var _passInvalid = false;
   var _show = false;
   final _formKey = GlobalKey<FormState>();
-
+  // var email = "user@gmail.com";
   final AuthService _auth = AuthService();
 
   // text field: username , password
-  String email = '';
   String password = '';
 
   // check email and password are full filled or not
