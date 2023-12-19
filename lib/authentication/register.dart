@@ -103,9 +103,9 @@ class RegisterFormState extends State<RegisterForm>{
                   }else {return null;}
                   
                 },
-                onChanged: (value){
-                  setState(() => password = value);
-                },
+                // onChanged: (value){
+                //   setState(() => password = value);
+                // },
               ),
               
               const SizedBox(height: 20.0),

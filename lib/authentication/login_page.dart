@@ -3,6 +3,8 @@ import 'package:my_flutter_app/home/home_page.dart';
 import 'package:my_flutter_app/authentication/register.dart';
 import 'forget_password.dart';
 import 'auth.dart';
+
+
 String email = '';
 
 @immutable
@@ -307,22 +309,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     )
                   ],
-                  // children: <Widget>[
-
-                  //   Text(
-                  //     "NEW USER? SIGN UP",
-                  //     style: TextStyle(
-                  //     fontSize: 15, color: Color(0xff888888),
-                  //   ),
-                  //   ),
-                  //   Text(
-                  //     "FORGOT PASSWORD?",
-                  //     style: TextStyle(
-                  //       fontSize: 15, color: Colors.blue,
-                  //     ),
-
-                  //   ),
-                  // ],
                 ),
               ),
             ],
