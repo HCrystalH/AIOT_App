@@ -37,10 +37,10 @@ class _LoginPageState extends State<LoginPage> {
   bool checkPassword = false;
   //error messages
   String error = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white, // Set the background color of the page
 
       body: Container(
@@ -50,11 +50,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                padding: const EdgeInsets.fromLTRB(0, 125, 0, 30),
                 child: Container(
                   width: 70,
                   height: 70,
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
                 child: Text(
                   "CBS Counthing",
                   style: TextStyle(
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
 
               // Email or username field
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: TextFormField(
                   controller: _emailController,
                   style: const TextStyle(fontSize: 18, color: Colors.black),
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
 
               //Forget Password field
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
 
               //Sign in with google account
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
