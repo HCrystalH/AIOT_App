@@ -76,7 +76,7 @@ class _MyaccountPageState extends State<accountPage> {
                   const SizedBox(height: 10.0),
                   TextFormField(
                     decoration: InputDecoration(labelText: 'New Password'),
-                    validator: (value) => _newPassword.length > 8
+                    validator: (value) => _newPassword.length < 8
                         ? 'Password length must be greater than 8 characters'
                         : null,
                     onChanged: (value) {
@@ -123,7 +123,7 @@ class _MyaccountPageState extends State<accountPage> {
                               () => message = 'Successful Change Password!');
                           await DatabaseService(uid: _uid)
                               .updateUserData(email, _cfirmNewPassword);
-                          Navigator.of(context).pop(); // Close the modal
+                          Navigator.of(context).pop(true); // Close the modal
                         }
                       } else {
                         setState(() => message =
@@ -150,7 +150,20 @@ class _MyaccountPageState extends State<accountPage> {
           ),
         );
       },
-    );
+    ).then((result) {
+      // This block is executed after the AlertDialog is closed and when show the successfully change
+
+      if (result != null && result is bool && result) {
+        // Show a SnackBar with the success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Successfully changed password!'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -202,6 +215,7 @@ class _MyaccountPageState extends State<accountPage> {
             ),
             onPressed: () {
               _showChangePasswordModal();
+
               Future<bool> CheckPassword(String _password) async {
                 dynamic result =
                     await _auth.signInWithEmailAndPassword(email, _password);
