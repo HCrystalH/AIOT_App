@@ -135,7 +135,7 @@ class _MyHomeState extends State<HomePage> {
                 _settingsColor = newColor.value;
                 break;
               case 2:
-                _pickImageFromCamera();
+                // _pickImageFromCamera();
                 _currentIndex = 2;
                 _cameraColor = newColor.value;
                 break;
