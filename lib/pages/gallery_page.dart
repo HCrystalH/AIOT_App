@@ -237,35 +237,42 @@ class _MygalleryPageState extends State<galleryPage> {
 // Function to count
 Future<void> countObject(File? imagefile, String? model) async {
   
-  debugPrint(WidthImage.toString());
-  debugPrint(HeightImage.toString());
+  // debugPrint(WidthImage.toString());
+  // debugPrint(HeightImage.toString());
+  final response = await http.post(
+    Uri.parse(url), // url
+    headers: {
+      'Connection': 'Keep-Alive',
+      'Timeout': 'Duration(seconds: 5000)',
+      
+    },
+    body: {  
+      'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
+      /* if want to use other models, add more button "MODEL5" "MODEL6"
+          use function and return or use global var
+      */
+      'model': model,
+    
+    },
+  ).timeout(Duration(seconds: 5000));
   try {
     // Upload the image to the server
-    final response = await http.post(
-      Uri.parse(url), // url
-      headers: {
-        'Connection': 'Keep-Alive',
-        'timeout': 'Duration(seconds: 5000)',
-      },
-      body: {  
-        'image': Base64Encoder().convert(await imagefile!.readAsBytes()),
-        /* if want to use other models, add more button "MODEL5" "MODEL6"
-           use function and return or use global var
-        */
-        'model': model,
-     
-      },
-    ).timeout(Duration(seconds: 5000));
+  
     
     debugPrint(response.statusCode.toString());
-   
+    debugPrint(response.contentLength.toString());
+
     if (response.statusCode == 200) {
       // Get the count of detected object from the server's response
-      final results = jsonDecode(response.body);    
-      final result = results[0];
-      final count = result['predictions'].length;
+      dynamic results = jsonDecode(response.body);   
+      /*
+        response.body khoan đưa vào jsonDecode() => đưa vào class ? có ?method  => Why? buffer size ? 
+        aysnchronous way ? nhận nhiều lần
+      */ 
+      dynamic result = results[0];
+      dynamic count = result['predictions'].length;
       // to draw
-      final box = result['predictions'][0]['box'];
+      dynamic box = result['predictions'][0]['box'];
       debugPrint(count.toString());
       // debugPrint(box.toString());
 
@@ -274,8 +281,6 @@ Future<void> countObject(File? imagefile, String? model) async {
       // debugPrint(result.toString());
       // debugPrint(countData.toString());
       // return results;
-    
-     
       setState(() {
         countResult = count;
         // _selectedImage = File(_selectedImage!.path);
@@ -297,7 +302,7 @@ class OpenPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint1 = Paint()
-      ..color = Colors.yellow // Adjust color
+      ..color = Colors.lightGreen // Adjust color
       ..strokeWidth = 2.0; // Adjust line width
 
     var len =  resultTodraw['predictions'].length;

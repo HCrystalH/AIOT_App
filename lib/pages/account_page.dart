@@ -31,8 +31,9 @@ class _MyaccountPageState extends State<accountPage> {
   String message = '';
   bool checkPassword = false;
   bool _show = false;
+  bool _checkPassResult = false;
   final String _uid = FirebaseAuth.instance.currentUser!.uid;
-
+  
   final AuthService _auth = AuthService();
 
   final _formKey = GlobalKey<FormState>();
@@ -44,6 +45,13 @@ class _MyaccountPageState extends State<accountPage> {
     });
   }
 
+  Future<bool> CheckPassword(String _password) async {
+    dynamic result =
+        await _auth.signInWithEmailAndPassword(email, _password);
+    if (result != null) return true;
+ 
+    return false;
+  }
 // This function is to show the modal change password
   void _showChangePasswordModal() {
     showDialog(
@@ -65,13 +73,18 @@ class _MyaccountPageState extends State<accountPage> {
                   const SizedBox(height: 20.0),
                   TextFormField(
                     decoration: InputDecoration(labelText: 'Current Password'),
-                    validator: (value) =>
-                        checkPassword ? 'Incorrect Password !!!' : null,
+                    validator:(value){
+                      if(_checkPassResult == false){
+                        return 'Your current password is incorrect!';
+                      }
+                    },
                     onChanged: (value) {
                       setState(() {
-                        _currentPassword = value;
+                        _currentPassword =value;
+                        
                       });
                     },
+                    
                   ),
                   const SizedBox(height: 10.0),
                   TextFormField(
@@ -112,13 +125,20 @@ class _MyaccountPageState extends State<accountPage> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
+                      bool _checkPassResult = await CheckPassword(_currentPassword);
+
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState?.save();
 
+                        if(CheckPassword(_currentPassword) == true) {
+                           setState(() =>    message = 'Your current password is incorrect!');
+                        }
+
                         if (_cfirmNewPassword != _newPassword) {
                           setState(() =>
-                              message = 'Please enter information correctly!');
-                        } else {
+                            message = 'Please enter information correctly!');
+                        }
+                        else {
                           setState(
                               () => message = 'Successful Change Password!');
                           await DatabaseService(uid: _uid)
@@ -216,16 +236,6 @@ class _MyaccountPageState extends State<accountPage> {
             onPressed: () {
               _showChangePasswordModal();
 
-              Future<bool> CheckPassword(String _password) async {
-                dynamic result =
-                    await _auth.signInWithEmailAndPassword(email, _password);
-                if (result != null)
-                  checkPassword = true;
-                else
-                  checkPassword = false;
-
-                return false;
-              }
             },
           ),
         ],
