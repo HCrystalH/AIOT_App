@@ -7,7 +7,7 @@ import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/services/database.dart';
 
 
-var url = 'http://192.168.35.1:5000/predict';
+var url = 'http://192.168.1.128:5000/predict';
 
 class settingPage extends StatefulWidget {
   // const MyWidget({super.key});

@@ -11,13 +11,18 @@ class galleryPage extends StatefulWidget {
 
   @override
   State<galleryPage> createState() => _MygalleryPageState();
-}
 
+  
+}
+class globalvar{
+  var countResult;
+}
 var countResult = 0;
+var counterWithConfidence = 0;  // for display # object counted with a specific confidence
 var resultTodraw;
 var WidthImage ;
 var HeightImage;
-
+double _currentConfidence = 0;
 class _MygalleryPageState extends State<galleryPage> {
   // This value is to select path of the image
   File? _selectedImage;
@@ -30,6 +35,7 @@ class _MygalleryPageState extends State<galleryPage> {
   int result =0;
   
   int ivisible = 1;
+  double temp = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,6 +108,7 @@ class _MygalleryPageState extends State<galleryPage> {
 
                         child: CustomPaint(
                           painter: OpenPainter(),
+                          
                         ),
                       ),
                     
@@ -170,6 +177,7 @@ class _MygalleryPageState extends State<galleryPage> {
                            
                           )))
                 ])),
+            
             Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child:
@@ -185,27 +193,53 @@ class _MygalleryPageState extends State<galleryPage> {
                               style: const TextStyle(
                                   color: Color.fromARGB(255, 33, 23, 23),
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                              
+                                  fontSize: 16), 
                             ),
                             
                             onPressed: () {
-                              // removeImage();
+                              setState(() {
+                                countResult = counterWithConfidence;
+                              });
                             },
                           ))),
       
                 ])),
+            
+            Row(children: [
+              Slider(
+                value: _currentConfidence,
+                max: 1,
+                divisions: 10,
+                label: _currentConfidence.toString(),
+                onChanged: (double value) async{
+                  setState(() {
+                    _currentConfidence = value;
+                    countResult = counterWithConfidence;
+                  });
+                },
+              ),
+              ElevatedButton(onPressed: someAsyncOperation,child: const Text(
+                    'Refresh',
+                    style: TextStyle(color: Colors.white),
+                  ), ),
+          ],),
           ]),
+          
           
     ));
   }
-
+  Future<void> someAsyncOperation() async {
+    
+    setState((){
+      countResult = counterWithConfidence;
+      _currentConfidence = _currentConfidence;
+    });
+  }
   Future _pickImageFromGallery() async {
    
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     
-   
     setState(() {
       
       ivisible = 0;
@@ -300,17 +334,24 @@ class OpenPainter extends CustomPainter {
   // OpenPainter(this.x1, this.x2,this.y1, this.y2);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size)  {
     var paint1 = Paint()
       ..color = Colors.lightGreen // Adjust color
       ..strokeWidth = 2.0; // Adjust line width
 
     var len =  resultTodraw['predictions'].length;
+    
+    counterWithConfidence = 0;
     if(resultTodraw['predictions'][0]['segment'] == null){
       debugPrint('BOUNDING BOX');
       for (int i=0;i<len;i++) {
         var box = resultTodraw['predictions'][i]['box'];
-      
+        var prediction = resultTodraw['predictions'][i];
+        var confidence = prediction['confidence'];
+
+        // Display images which confidence >= selected conf
+        if(confidence < _currentConfidence) continue;
+
         final x1 = box['x1'] * (size.width);
         final x2 = box['x2'] * (size.width);
 
@@ -321,12 +362,30 @@ class OpenPainter extends CustomPainter {
         canvas.drawLine(Offset(x2, y1), Offset(x2, y2), paint1);
         canvas.drawLine(Offset(x2, y2), Offset(x1, y2), paint1);
         canvas.drawLine(Offset(x1, y2), Offset(x1, y1), paint1);
+
+        final number = (i + 1).toString(); // Convert index to string
+        TextSpan span =  TextSpan(style: const TextStyle(color: Color.fromARGB(255, 189, 242, 247), fontSize: 10), text: number);
+        TextPainter tp =  TextPainter(text: span, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
+        tp.layout();
+        
+        // Calculate text position (e.g., top-left corner of the box)
+        final textX = (x1 + x2) /2  + (x1+x2)%2;    // Adjust horizontal offset
+        final textY = (y1 + y2) /2  + (y1 + y2)%2;  // Adjust vertical offset
+
+        tp.paint(canvas, Offset(textX, textY));
+        counterWithConfidence++;
+        countResult = counterWithConfidence;
       }
     }else{
       debugPrint('SEGMENT');
+    
       for (int i=0;i<len;i++) {
         var segment = resultTodraw['predictions'][i]['segment'];
         // segment = [[x,y], [x,y], ...]
+        var prediction = resultTodraw['predictions'][i];
+        var confidence = prediction['confidence'];
+
+        if(confidence < _currentConfidence) continue;
         for(int j = 0 ; j< segment.length -1;j++){
           final currentX = segment[j][0] *(size.width);
           final currentY = segment[j][1] *(size.height);
@@ -336,15 +395,37 @@ class OpenPainter extends CustomPainter {
 
           canvas.drawLine(Offset(currentX, currentY), Offset(nextX, nextY), paint1);
         }
+        
         final x0 = segment[0][0] *(size.width);
         final y0 = segment[0][1] *(size.height);
 
         final xn = segment[segment.length-1][0] *(size.width);
         final yn = segment[segment.length-1][1] *(size.height);
         canvas.drawLine(Offset(x0, y0), Offset(xn, yn), paint1);  
+        
+        final number = (i + 1).toString(); // Convert index to string
+        TextSpan span = TextSpan(
+          style: const TextStyle(color: Color.fromARGB(255, 189, 242, 247) , 
+          fontSize: 10)
+          , text: number
+        );
+        TextPainter tp =  TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
+        tp.layout();
+
+        // Calculate text position (e.g., top-left corner of the box)
+        final textX = (x0);    // Adjust horizontal offset
+        final textY = (y0) + i;    // Adjust vertical offset
+
+        tp.paint(canvas, Offset(textX, textY));
+
+        counterWithConfidence++;
       }
     }
+    
   }
+  
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
+
+  
 }
