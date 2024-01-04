@@ -364,7 +364,7 @@ class OpenPainter extends CustomPainter {
         canvas.drawLine(Offset(x1, y2), Offset(x1, y1), paint1);
 
         final number = (i + 1).toString(); // Convert index to string
-        TextSpan span =  TextSpan(style: const TextStyle(color: Color.fromARGB(255, 189, 242, 247), fontSize: 10), text: number);
+        TextSpan span =  TextSpan(style: const TextStyle(color: Color.fromRGBO(21, 239, 235, 0.885), fontSize: 10, fontWeight: FontWeight.bold), text: number);
         TextPainter tp =  TextPainter(text: span, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
         tp.layout();
         
@@ -405,8 +405,8 @@ class OpenPainter extends CustomPainter {
         
         final number = (i + 1).toString(); // Convert index to string
         TextSpan span = TextSpan(
-          style: const TextStyle(color: Color.fromARGB(255, 189, 242, 247) , 
-          fontSize: 10)
+          style: const TextStyle(color: Color.fromARGB(255, 238, 15, 186) , 
+          fontSize: 6)
           , text: number
         );
         TextPainter tp =  TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
