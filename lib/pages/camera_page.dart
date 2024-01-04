@@ -139,7 +139,7 @@ class _MycameraPageState extends State<cameraPage> {
                     child: Visibility(
                       visible: ivisible == 0,
                       child: MaterialButton(
-                        color: Colors.red,
+                        color: Color.fromARGB(255, 241, 144, 80),
                         child: const Text(
                           "Remove",
                           style: TextStyle(
@@ -156,7 +156,7 @@ class _MycameraPageState extends State<cameraPage> {
                       child: Visibility(
                           visible: ivisible == 0,
                           child: MaterialButton(
-                            color: Colors.blue,
+                            color: Color.fromARGB(255, 121, 180, 137),
                             child: const Text(
                               "Count",
                               style: TextStyle(
@@ -179,11 +179,11 @@ class _MycameraPageState extends State<cameraPage> {
                       child: Visibility(
                           visible: ivisible == 0,
                           child: MaterialButton(
-                            color: Color.fromARGB(255, 232, 241, 67),
+                            color: Color.fromARGB(255, 102, 214, 237),
                             child: Text(
                               "Number of objects counted: $countResult",
                               style: const TextStyle(
-                                  color: Color.fromARGB(255, 120, 4, 4),
+                                  color: Color.fromARGB(255, 33, 23, 23),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                               
