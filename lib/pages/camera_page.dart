@@ -118,7 +118,7 @@ class _MycameraPageState extends State<cameraPage> {
                       child: Visibility(
                           visible: ivisible == 1,
                           child: MaterialButton(
-                            color: Colors.red,
+                            color: Color.fromARGB(255, 235, 131, 71),
                             child: const Text(
                               "Take a photo",
                               style: TextStyle(

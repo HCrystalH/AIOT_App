@@ -15,7 +15,6 @@ import 'package:my_flutter_app/pages/setting_page.dart';
 import 'package:my_flutter_app/pages/camera_page.dart';
 import 'package:my_flutter_app/pages/gallery_page.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _MyHomeState();
@@ -39,42 +38,48 @@ class _MyHomeState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),         
-      backgroundColor: const Color.fromARGB(255, 121, 180, 137), // Use the RGB value for matcha
+        title: const Text("Home Page"),
+        backgroundColor: const Color.fromARGB(
+            255, 121, 180, 137), // Use the RGB value for matcha
+        automaticallyImplyLeading:
+            false, // Set this to false to hide the back arrow
 
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              // Add your sign-out logic here
-              AuthService().signOutGoogle();
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-                ModalRoute.withName('/'),
-              );
-            },
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: () {
-                  
-                },
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                // Add your sign-out logic here
+                AuthService().signOutGoogle();
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  ModalRoute.withName('/'),
+                );
+              },
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.exit_to_app),
+                    onPressed: () {
+                      AuthService().signOutGoogle();
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                        ModalRoute.withName('/'),
+                      );
+                    },
+                  ),
+                  const Text(
+                    'Log Out',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              const Text(
-                'Log Out',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
-  ],
-),
-      body: 
-        
-        PageView(
+      body: PageView(
         controller: _pageController,
         children: [
           accountPage(),
@@ -82,12 +87,11 @@ class _MyHomeState extends State<HomePage> {
           cameraPage(),
           galleryPage(),
         ],
-        ),
-       bottomNavigationBar: BottomNavigationBar(
+      ),
+      bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,
-                color: Color(_accountColor)),
+            icon: Icon(Icons.account_circle, color: Color(_accountColor)),
             label: 'Account',
           ),
           BottomNavigationBarItem(
@@ -96,18 +100,15 @@ class _MyHomeState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Image.asset('assets/camera.png',
-                width: 24.0,
-                height: 24.0,
-                color: Color(_cameraColor)),
+                width: 24.0, height: 24.0, color: Color(_cameraColor)),
             label: 'Camera',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library,
-                color: Color(_galleryColor)),
+            icon: Icon(Icons.photo_library, color: Color(_galleryColor)),
             label: 'Gallery',
           ),
         ],
-        selectedItemColor:  const Color.fromARGB(255, 121, 180, 137),
+        selectedItemColor: const Color.fromARGB(255, 121, 180, 137),
         unselectedItemColor: Colors.grey,
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -122,7 +123,7 @@ class _MyHomeState extends State<HomePage> {
             _cameraColor = Colors.grey.value;
             _settingsColor = Colors.grey.value;
             _galleryColor = Colors.grey.value;
-              Color newColor = const Color.fromARGB(255, 121, 180, 137);
+            Color newColor = const Color.fromARGB(255, 121, 180, 137);
 
             // Set the selected icon color to blue
             switch (index) {
@@ -149,11 +150,10 @@ class _MyHomeState extends State<HomePage> {
 
           // Handle navigation or any other action based on the selected index
           print('Tapped on item $index');
-                },
-              ),
-        );
+        },
+      ),
+    );
   }
-
 
   // Function to pick image from camera
   Future _pickImageFromCamera() async {
@@ -166,7 +166,4 @@ class _MyHomeState extends State<HomePage> {
       _selectedImage = File(returnedImage!.path);
     });
   }
-  
-
 }
-
