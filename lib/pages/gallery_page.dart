@@ -14,10 +14,8 @@ class galleryPage extends StatefulWidget {
   State<galleryPage> createState() => _MygalleryPageState();
 }
 
-class globalvar {
-  var countResult;
-}
 
+var subtype = "";
 var countResult = 0;
 var counterWithConfidence =
     0; // for display # object counted with a specific confidence
@@ -59,7 +57,8 @@ class _MygalleryPageState extends State<galleryPage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
-              child: DropdownButton<String>(
+              child: Row( children: [
+              DropdownButton<String>(
                 value: selectedType,
                 icon: Icon(Icons.arrow_downward),
                 iconSize: 24,
@@ -81,6 +80,16 @@ class _MygalleryPageState extends State<galleryPage> {
                     child: Text(value),
                   );
                 }).toList(),
+              ),
+              Expanded(
+              child: Text(
+                  textAlign: TextAlign.center,
+                  "$subtype",
+                  style: TextStyle(fontSize: 18, color: Color.fromRGBO(19, 13, 209, 0.647), fontWeight: FontWeight.w900),
+                ),
+              ),  
+              ],
+              
               ),
             ),
             // Display image
@@ -267,7 +276,7 @@ class _MygalleryPageState extends State<galleryPage> {
       imageWidth = false;
       _selectedImage = null;
       countResult = 0;
-
+      subtype = "";
       flag = false;
     });
   }
@@ -311,7 +320,15 @@ class _MygalleryPageState extends State<galleryPage> {
         // debugPrint(box.toString());
 
         resultTodraw = result; // to draw bounding box
-
+        
+        if(model == "MODEL5") subtype = "";
+        else if(model == "MODEL6") 
+          subtype = "Subtype: " 
+          + result['subtype'][0][0]
+          + "("
+          + ((result['subtype'][0][1] * 100 ) .round()).toString()
+          + "%)";
+        
         // debugPrint(result.toString());
         // debugPrint(countData.toString());
         // return results;
@@ -347,7 +364,7 @@ class OpenPainter extends CustomPainter {
         var box = resultTodraw['predictions'][i]['box'];
         var prediction = resultTodraw['predictions'][i];
         var confidence = prediction['confidence'];
-
+       
         // Display images which confidence >= selected conf
         if (confidence < _currentConfidence) continue;
 
@@ -382,6 +399,7 @@ class OpenPainter extends CustomPainter {
         tp.paint(canvas, Offset(textX, textY));
         counterWithConfidence++;
         countResult = counterWithConfidence;
+        
       }
     } else {
       debugPrint('SEGMENT');
